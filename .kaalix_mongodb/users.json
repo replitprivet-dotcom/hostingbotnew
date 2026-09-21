@@ -1,0 +1,33 @@
+[
+  {
+    "_id": "66f01a8b9e1c2d3e4f5a6b7c",
+    "username": "admin",
+    "email": "admin@kaalixcloud.local",
+    "role": "superadmin",
+    "plan": "enterprise",
+    "credits": 1000,
+    "status": "active",
+    "tags": [
+      "dev",
+      "admin",
+      "verified"
+    ],
+    "createdAt": "2026-09-18T08:34:13.601Z",
+    "updatedAt": "2026-09-21T07:34:13.601Z"
+  },
+  {
+    "_id": "66f01a8b9e1c2d3e4f5a6b7d",
+    "username": "bot_operator_1",
+    "email": "operator@telegram.org",
+    "role": "user",
+    "plan": "pro",
+    "credits": 450,
+    "status": "active",
+    "tags": [
+      "telegram",
+      "bot"
+    ],
+    "createdAt": "2026-09-19T08:34:13.601Z",
+    "updatedAt": "2026-09-21T06:34:13.601Z"
+  }
+]

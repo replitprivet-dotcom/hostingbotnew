@@ -1,0 +1,10 @@
+[
+  {
+    "_id": "66f01a8b9e1c2d3e4f5a6b9f",
+    "level": "info",
+    "event": "DATABASE_BOOTSTRAP",
+    "message": "Kaalix MongoDB NoSQL Engine initialized successfully.",
+    "source": "system_core",
+    "createdAt": "2026-09-21T08:34:13.601Z"
+  }
+]

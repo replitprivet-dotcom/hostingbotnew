@@ -1,0 +1,15 @@
+[
+  {
+    "_id": "66f01a8b9e1c2d3e4f5a6b8e",
+    "botId": "simran_v3_hosting",
+    "name": "Simran Hosting Bot V3",
+    "platform": "telegram",
+    "status": "online",
+    "autonomousHealing": true,
+    "maxProcesses": 10,
+    "uptimeSeconds": 84200,
+    "webhookUrl": "https://ais-dev-vhcndkelz7o3jcw6zawq5k-206684507035.asia-southeast1.run.app/api/v1/telegram/upload",
+    "createdAt": "2026-09-20T08:34:13.601Z",
+    "updatedAt": "2026-09-21T08:34:13.601Z"
+  }
+]

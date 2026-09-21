@@ -1,0 +1,8 @@
+{
+  "name": "Remix JARVIS Autonomous Bot Studio \u0026 Self-Healing Cloud",
+  "description": "Autonomous Replit-style bot hosting with DeepSeek-V3 AI self-healing code repair, real-time log monitoring, automatic recovery protocols, and Google Drive backups.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

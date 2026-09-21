@@ -131,22 +131,46 @@ export function removeSavedAccount(email: string) {
   }
 }
 
-export function requestDriveAccessToken(forceSelectAccount: boolean = false): Promise<string> {
+export function ensureGoogleIdentityServicesLoaded(timeoutMs = 8000): Promise<any> {
   return new Promise((resolve, reject) => {
-    if (!forceSelectAccount && cachedAccessToken) {
-      resolve(cachedAccessToken);
+    if (typeof window === 'undefined') {
+      reject(new Error('Window not available'));
       return;
     }
-
-    if (forceSelectAccount) {
-      setCachedToken(null);
+    if (window.google?.accounts?.oauth2) {
+      resolve(window.google.accounts.oauth2);
+      return;
     }
+    const startTime = Date.now();
+    const interval = setInterval(() => {
+      if (window.google?.accounts?.oauth2) {
+        clearInterval(interval);
+        resolve(window.google.accounts.oauth2);
+      } else if (Date.now() - startTime > timeoutMs) {
+        clearInterval(interval);
+        reject(
+          new Error(
+            'Google Identity Services is loading. Please check your internet connection or try again in a moment.'
+          )
+        );
+      }
+    }, 100);
+  });
+}
 
-    // AUTOMATIC CLOUD BRIDGE:
-    // If the app is accessed from Vercel (e.g. google-drive-chi.vercel.app) or an external origin,
-    // Google GIS client-side will throw "Error 400: origin_mismatch".
-    // We seamlessly route through the Cloud Bridge hosted on the Google-authorized Cloud Run origin!
-    if (!isAuthorizedDirectOrigin()) {
+export async function requestDriveAccessToken(forceSelectAccount: boolean = false): Promise<string> {
+  if (!forceSelectAccount && cachedAccessToken) {
+    return cachedAccessToken;
+  }
+
+  if (forceSelectAccount) {
+    setCachedToken(null);
+  }
+
+  // AUTOMATIC CLOUD BRIDGE:
+  // If the app is accessed from Vercel or an external origin, route through authorized Cloud Run bridge
+  if (!isAuthorizedDirectOrigin()) {
+    return new Promise((resolve, reject) => {
       const width = 500;
       const height = 660;
       const left = window.screenX + (window.outerWidth - width) / 2;
@@ -202,7 +226,6 @@ export function requestDriveAccessToken(forceSelectAccount: boolean = false): Pr
       checkInterval = setInterval(() => {
         if (popup.closed) {
           cleanup();
-          // Check if token was received
           const maybeToken = getCachedToken();
           if (maybeToken) {
             resolve(maybeToken);
@@ -216,21 +239,17 @@ export function requestDriveAccessToken(forceSelectAccount: boolean = false): Pr
         }
       }, 700);
 
-      // 3 minute timeout
       timeoutId = setTimeout(() => {
         cleanup();
         reject(new Error('Sign-In timed out. Please try again.'));
       }, 180000);
+    });
+  }
 
-      return;
-    }
+  // Direct in-origin Google Identity Services - ensure library is loaded
+  await ensureGoogleIdentityServicesLoaded();
 
-    // Direct in-origin Google Identity Services
-    if (!window.google || !window.google.accounts || !window.google.accounts.oauth2) {
-      reject(new Error('Google Identity Services script not yet loaded. Please wait a moment or refresh the page.'));
-      return;
-    }
-
+  return new Promise((resolve, reject) => {
     try {
       const clientId = getActiveGoogleClientId();
       tokenClientInstance = window.google.accounts.oauth2.initTokenClient({
@@ -250,7 +269,10 @@ export function requestDriveAccessToken(forceSelectAccount: boolean = false): Pr
         },
       });
 
-      tokenClientInstance.requestAccessToken({ prompt: forceSelectAccount ? 'select_account' : 'consent' });
+      // Automatic Drive authorization: request drive scope without forced redundant consent screens
+      tokenClientInstance.requestAccessToken({
+        prompt: forceSelectAccount ? 'select_account' : '',
+      });
     } catch (err: any) {
       reject(new Error(`Failed to initialize Google token client: ${err.message}`));
     }

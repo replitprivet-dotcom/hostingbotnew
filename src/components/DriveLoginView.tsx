@@ -222,7 +222,7 @@ export const DriveLoginView: React.FC<DriveLoginViewProps> = ({
                 <span>Automatic Google Drive Authorization</span>
               </div>
               <p className="text-[11px] text-blue-700 leading-relaxed">
-                Aap jaise hi Google ke saath sign in karenge, <strong>Google Drive automatically authorize aur enable ho jayega</strong> — koi extra step ya token copy karne ki zaroorat nahi hai.
+                Signing in with Google automatically connects and authorizes <strong>Google Drive storage</strong>. Your files, media, and folders will synchronize seamlessly.
               </p>
             </div>
 
@@ -410,23 +410,23 @@ export const DriveLoginView: React.FC<DriveLoginViewProps> = ({
 
             <div className="text-xs text-slate-600 space-y-3 leading-relaxed">
               <div className="p-3 bg-blue-50 border border-blue-200/80 rounded-xl text-blue-900 space-y-1">
-                <div className="font-bold">Error 400: origin_mismatch kyun aata hai?</div>
+                <div className="font-bold">Why does Error 400: origin_mismatch occur?</div>
                 <div>
-                  Jab aap app ko <strong>Vercel</strong> (jaise <code className="bg-white/80 px-1 py-0.5 rounded font-mono">https://google-drive-chi.vercel.app</code>) par host karte hain, Google OAuth check karta hai ki kya yeh URL Google Cloud Console ke <strong>"Authorized JavaScript origins"</strong> me added hai ya nahi.
+                  When hosting the application on external platforms such as <strong>Vercel</strong> (e.g. <code className="bg-white/80 px-1 py-0.5 rounded font-mono">https://google-drive-chi.vercel.app</code>), Google OAuth verifies whether the request origin is listed under <strong>"Authorized JavaScript origins"</strong> in the Google Cloud Console.
                 </div>
               </div>
 
               <div className="space-y-2">
-                <div className="font-bold text-slate-900 text-sm">3 Aasan Solutions:</div>
+                <div className="font-bold text-slate-900 text-sm">Recommended Solutions:</div>
 
                 {/* Solution 1 */}
                 <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl space-y-1.5">
                   <div className="font-semibold text-emerald-950 flex items-center gap-1.5">
                     <span className="w-5 h-5 rounded-full bg-emerald-600 text-white text-[11px] font-bold flex items-center justify-center">1</span>
-                    Automatic Cloud Bridge (Sabse Aasan - No Cloud Setup Needed!):
+                    Automatic Cloud Bridge (Recommended - No Setup Required):
                   </div>
                   <p className="text-emerald-900">
-                    Aapko Google Cloud me kuch karne ki zaroorat nahi hai! Bas Login screen par <strong>"Continue with Google"</strong> dabayein. App automatically secure bridge popup se login karwayega jisme origin check bypass ho jata hai.
+                    No manual configuration is required. Simply click <strong>"Sign in with Google & Enable Drive"</strong>. The system automatically launches an authenticated bridge popup that bypasses domain origin mismatches safely.
                   </p>
                 </div>
 
@@ -434,10 +434,10 @@ export const DriveLoginView: React.FC<DriveLoginViewProps> = ({
                 <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5">
                   <div className="font-semibold text-slate-800 flex items-center gap-1.5">
                     <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-700 text-[11px] font-bold flex items-center justify-center">2</span>
-                    Google OAuth Playground (Direct Token - 100% Works):
+                    Google OAuth Playground (Direct Access Token):
                   </div>
                   <p className="text-slate-600">
-                    Login screen par <strong>"Direct Token"</strong> tab kholein. Wahan diye gaye Google Playground link par click karke kisi bhi Gmail account se 1 click me access token copy karke paste karein.
+                    Switch to the <strong>"Token / API Key"</strong> tab on the sign-in screen. Open Google OAuth Playground with the pre-configured Drive scope link, authorize your Google account, and paste the generated access token.
                   </p>
                 </div>
 
@@ -445,12 +445,12 @@ export const DriveLoginView: React.FC<DriveLoginViewProps> = ({
                 <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5">
                   <div className="font-semibold text-slate-800 flex items-center gap-1.5">
                     <span className="w-5 h-5 rounded-full bg-slate-200 text-slate-700 text-[11px] font-bold flex items-center justify-center">3</span>
-                    Add Vercel Origin to Google Cloud Console (Optional):
+                    Register Origin in Google Cloud Console (Optional):
                   </div>
                   <ol className="list-decimal pl-5 space-y-1 text-slate-600">
-                    <li><a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noreferrer" className="text-blue-600 underline">console.cloud.google.com/apis/credentials</a> par jayein.</li>
-                    <li>Apne OAuth 2.0 Web Client ID par click karein.</li>
-                    <li><strong>"Authorized JavaScript origins"</strong> me yeh URL add karein:</li>
+                    <li>Navigate to <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noreferrer" className="text-blue-600 underline">Google Cloud Console Credentials</a>.</li>
+                    <li>Open your OAuth 2.0 Web Client ID configuration.</li>
+                    <li>Add the following URL under <strong>"Authorized JavaScript origins"</strong>:</li>
                     <div className="flex items-center gap-2 pt-1 pb-1">
                       <code className="bg-slate-200 px-2 py-1 rounded text-slate-800 font-mono text-[11px] select-all">
                         {currentOrigin || 'https://google-drive-chi.vercel.app'}
@@ -463,7 +463,7 @@ export const DriveLoginView: React.FC<DriveLoginViewProps> = ({
                         <span>{copiedOrigin ? 'Copied' : 'Copy'}</span>
                       </button>
                     </div>
-                    <li><strong>Save</strong> par click karein.</li>
+                    <li>Click <strong>Save</strong> to register the origin.</li>
                   </ol>
                 </div>
               </div>

@@ -1111,20 +1111,34 @@ def ensure_bot_runtime(bd):
     except:
         pass
 
+    os.makedirs(home, exist_ok=True)
+
+    # VPS Linux system user creation & isolation
     if is_root and pwd is not None:
         try:
             try:
                 pw = pwd.getpwnam(username)
             except KeyError:
+                # Add dedicated system user for this bot on VPS
                 subprocess.run(
                     ['useradd', '--system', '--badname', '--create-home', '--home-dir', home, '--shell', '/usr/sbin/nologin', username],
                     check=True, capture_output=True, text=True
                 )
+                pw = pwd.getpwnam(username)
+            
+            # Ensure ownership of bot directory belongs to isolated user
+            try:
+                shutil.chown(home, user=pw.pw_uid, group=pw.pw_gid)
+                for root_dir, dirs, files in os.walk(home):
+                    for d in dirs:
+                        shutil.chown(os.path.join(root_dir, d), user=pw.pw_uid, group=pw.pw_gid)
+                    for file in files:
+                        shutil.chown(os.path.join(root_dir, file), user=pw.pw_uid, group=pw.pw_gid)
+            except Exception as chown_err:
+                logger.warning(f"chown warning: {chown_err}")
         except Exception as e:
-            logger.warning(f"Root useradd skipped: {e}")
+            logger.warning(f"VPS useradd skipped/fallback: {e}")
 
-    # Fallback to isolated user folder
-    os.makedirs(home, exist_ok=True)
     db.update_bot(bid, system_username=username, system_home=home, system_password=password)
     return db.get_bot(bid), {'username': username, 'password': password, 'home': home}
 

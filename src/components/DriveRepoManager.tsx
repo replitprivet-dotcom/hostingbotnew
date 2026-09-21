@@ -112,7 +112,7 @@ export const DriveRepoManager: React.FC<DriveRepoManagerProps> = ({
 
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-2xl flex flex-col min-h-[640px]">
-      {/* Top GitHub-style Repo Navbar */}
+      {/* Top Drive Repo Navbar */}
       <div className="p-4 border-b border-slate-800 bg-slate-900/80 flex flex-wrap items-center justify-between gap-3">
         {/* Breadcrumb Navigation */}
         <div className="flex items-center gap-1.5 text-sm overflow-x-auto py-1">

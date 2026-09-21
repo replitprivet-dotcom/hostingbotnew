@@ -29,14 +29,12 @@ interface MongoStudioProps {
   user: DriveUser;
   activeApiKey: string;
   onBackToDrive: () => void;
-  onOpenGitHubSync?: () => void;
 }
 
 export function MongoStudio({
   user,
   activeApiKey,
-  onBackToDrive,
-  onOpenGitHubSync
+  onBackToDrive
 }: MongoStudioProps) {
   // Collections state
   const [collections, setCollections] = useState<MongoCollectionInfo[]>([]);
@@ -446,17 +444,6 @@ curl -X POST "${baseUrl}/api/v1/db/${effectiveCol}/find" \\
           </div>
 
           <div className="flex items-center gap-2">
-            {onOpenGitHubSync && (
-              <button
-                onClick={onOpenGitHubSync}
-                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold transition-colors cursor-pointer"
-                title="Sync / Upload to GitHub"
-              >
-                <FolderGit2 className="w-3.5 h-3.5 text-slate-600" />
-                <span>GitHub Sync</span>
-              </button>
-            )}
-
             <button
               onClick={handleBackupToDrive}
               disabled={isBackingUp}

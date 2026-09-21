@@ -97,7 +97,6 @@ interface GoogleDriveViewProps {
   onUploadLocalFile: (file: File) => Promise<void>;
   onOpenApiKeys: () => void;
   onOpenMongoStudio?: () => void;
-  onOpenGitHubSync?: () => void;
   onLogout: () => void;
   onSwitchAccount: () => Promise<void>;
   activeNavTab: 'home' | 'starred' | 'shared' | 'files';
@@ -130,7 +129,6 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
   onUploadLocalFile,
   onOpenApiKeys,
   onOpenMongoStudio,
-  onOpenGitHubSync,
   onLogout,
   onSwitchAccount,
   activeNavTab,
@@ -464,7 +462,6 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
         onOpenPrivacy={() => setShowPrivacyModal(true)}
         onRefreshStorage={onRefresh}
         onOpenMongoStudio={onOpenMongoStudio}
-        onOpenGitHubSync={onOpenGitHubSync}
       />
 
       {/* Code Editor Modal */}
@@ -492,7 +489,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
         activeApiKey={activeApiKey}
       />
 
-      {/* GitHub Style Raw File Preview Modal */}
+      {/* Raw File Preview Modal */}
       <RawFilePreviewModal
         file={rawPreviewFile}
         content={rawPreviewContent}
@@ -865,22 +862,6 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
                     </button>
                   )}
 
-                  {onOpenGitHubSync && (
-                    <button
-                      onClick={() => {
-                        setShowTopSettingsMenu(false);
-                        onOpenGitHubSync();
-                      }}
-                      className="w-full px-4 py-2.5 text-left flex items-center gap-3 hover:bg-slate-50 text-slate-800 font-semibold"
-                    >
-                      <FolderGit2 className="w-4 h-4 text-slate-700" />
-                      <div>
-                        <div>GitHub Repository Sync</div>
-                        <div className="text-[10px] font-normal text-slate-500">Push files & deploy to GitHub repo</div>
-                      </div>
-                    </button>
-                  )}
-
                   <button
                     onClick={() => {
                       setShowTopSettingsMenu(false);
@@ -1006,17 +987,6 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
             >
               <Database className="w-3.5 h-3.5 text-emerald-600" />
               <span>MongoDB Studio</span>
-            </button>
-          )}
-
-          {onOpenGitHubSync && (
-            <button
-              onClick={onOpenGitHubSync}
-              className="px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-colors cursor-pointer flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300"
-              title="Open GitHub Repository Sync"
-            >
-              <FolderGit2 className="w-3.5 h-3.5 text-slate-700" />
-              <span>GitHub Sync</span>
             </button>
           )}
         </div>

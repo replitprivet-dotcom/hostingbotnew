@@ -9,3 +9,4 @@ __pycache__/
 .env*
 !.env.example
 .api_keys.json
+.kaalix_mongodb/

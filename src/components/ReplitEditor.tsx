@@ -10,8 +10,7 @@ import {
   CloudUpload, 
   Layers, 
   Code2, 
-  ShieldCheck,
-  Github
+  ShieldCheck
 } from 'lucide-react';
 import { UserFile, DiagnosisResult } from '../types';
 
@@ -23,7 +22,6 @@ interface ReplitEditorProps {
   onRunCode: () => void;
   onSelfHealAndRun: () => void;
   onUploadToDrive: () => void;
-  onSyncGitHub?: () => void;
   onResetOriginal: () => void;
   isRunning: boolean;
   isHealing: boolean;
@@ -38,7 +36,6 @@ export const ReplitEditor: React.FC<ReplitEditorProps> = ({
   onRunCode,
   onSelfHealAndRun,
   onUploadToDrive,
-  onSyncGitHub,
   onResetOriginal,
   isRunning,
   isHealing,
@@ -167,17 +164,6 @@ export const ReplitEditor: React.FC<ReplitEditorProps> = ({
             <CloudUpload className="w-3.5 h-3.5 text-blue-400" />
             Upload Drive
           </button>
-
-          {onSyncGitHub && (
-            <button
-              onClick={onSyncGitHub}
-              className="px-2.5 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-indigo-300 text-xs transition-all flex items-center gap-1.5 border border-slate-700"
-              title="Push changes to GitHub repository"
-            >
-              <Github className="w-3.5 h-3.5 text-indigo-400" />
-              Sync GitHub
-            </button>
-          )}
 
           <button
             onClick={onRunCode}

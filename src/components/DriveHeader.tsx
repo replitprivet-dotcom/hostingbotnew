@@ -45,7 +45,7 @@ export const DriveHeader: React.FC<DriveHeaderProps> = ({
               )}
             </div>
             <p className="text-xs text-slate-400">
-              GitHub-style file repo, text/code editor & REST API Key access for VPS & Railway
+              CloudDrive file repo, text/code editor & REST API Key access for VPS & Railway
             </p>
           </div>
         </div>

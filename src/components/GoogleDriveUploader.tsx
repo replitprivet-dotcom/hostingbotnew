@@ -24,7 +24,6 @@ interface GoogleDriveUploaderProps {
   onUploadFile: (fileName: string, content: string) => Promise<GDriveUploadRecord>;
   records: GDriveUploadRecord[];
   mainPyContent?: string;
-  onNavigateToGitHub?: () => void;
 }
 
 export const GoogleDriveUploader: React.FC<GoogleDriveUploaderProps> = ({
@@ -32,7 +31,6 @@ export const GoogleDriveUploader: React.FC<GoogleDriveUploaderProps> = ({
   onUploadFile,
   records,
   mainPyContent,
-  onNavigateToGitHub,
 }) => {
   const [selectedFileId, setSelectedFileId] = useState<string>(files[0]?.id || '');
   const [isUploading, setIsUploading] = useState(false);
@@ -284,38 +282,6 @@ export const GoogleDriveUploader: React.FC<GoogleDriveUploaderProps> = ({
           </div>
         </div>
 
-      </div>
-
-      {/* GitHub Sync Integration Card */}
-      <div className="bg-slate-900 border border-indigo-900/60 rounded-xl p-5 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-start sm:items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-indigo-950/80 border border-indigo-700/60 flex items-center justify-center flex-shrink-0">
-            <Github className="w-5 h-5 text-indigo-400" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h3 className="text-sm font-bold text-slate-200">
-                Sync with GitHub Repository
-              </h3>
-              <span className="text-[10px] font-mono text-indigo-300 bg-indigo-950 px-2 py-0.5 rounded border border-indigo-800">
-                Direct Git Push
-              </span>
-            </div>
-            <p className="text-xs text-slate-400 mt-0.5">
-              Connect your GitHub repository to directly push <code className="text-cyan-300 font-mono">main.py</code> or any code changes with custom commit messages.
-            </p>
-          </div>
-        </div>
-
-        {onNavigateToGitHub && (
-          <button
-            onClick={onNavigateToGitHub}
-            className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg text-xs transition-all flex items-center justify-center gap-2 whitespace-nowrap shadow-md shadow-indigo-600/20"
-          >
-            <span>Open GitHub Sync Tab</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        )}
       </div>
 
       {/* Cloud Uploads History Table */}

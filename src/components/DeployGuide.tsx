@@ -53,7 +53,7 @@ export const DeployGuide: React.FC = () => {
                   onClick={() =>
                     handleCopy(
                       'vercel',
-                      `# 1. Push your code to GitHub (Private Repo: google_drive)\n# 2. Go to vercel.com/new and import replitprivet-dotcom/google_drive\n# 3. Framework Preset: Vite\n# 4. Build Command: npm run build\n# 5. Output Directory: dist\n# 6. Click Deploy!`
+                      `# 1. Push your code to your remote repo\n# 2. Go to vercel.com/new and import the project\n# 3. Framework Preset: Vite\n# 4. Build Command: npm run build\n# 5. Output Directory: dist\n# 6. Click Deploy!`
                     )
                   }
                   className="text-emerald-400 hover:text-emerald-300 text-xs flex items-center gap-1"
@@ -64,7 +64,7 @@ export const DeployGuide: React.FC = () => {
               </div>
 
               <p className="text-xs text-slate-400 leading-relaxed">
-                Import your private GitHub repo <code className="text-emerald-300 font-bold">google_drive</code> directly into Vercel with one click.
+                Import your project repository directly into Vercel with one click.
               </p>
 
               <div className="space-y-2 text-xs font-mono">
@@ -145,7 +145,7 @@ pm2 start dist/server.cjs`}
               </div>
 
               <p className="text-xs text-slate-400 leading-relaxed">
-                Connect your GitHub repo to Railway and set the build/start commands:
+                Connect your repository to Railway and set the build/start commands:
               </p>
 
               <div className="space-y-2 text-xs font-mono">

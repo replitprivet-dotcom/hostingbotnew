@@ -1,11 +1,11 @@
 import React from 'react';
-import { Cpu, ShieldCheck, Zap, Bot, Cloud, Sparkles, Activity, Github } from 'lucide-react';
+import { Cpu, ShieldCheck, Zap, Bot, Cloud, Sparkles, Activity } from 'lucide-react';
 import { SystemTelemetry } from '../types';
 
 interface HeaderProps {
   telemetry: SystemTelemetry | null;
-  activeTab: 'ide' | 'watchdog' | 'bot_script' | 'gdrive' | 'github';
-  setActiveTab: (tab: 'ide' | 'watchdog' | 'bot_script' | 'gdrive' | 'github') => void;
+  activeTab: 'ide' | 'watchdog' | 'bot_script' | 'gdrive';
+  setActiveTab: (tab: 'ide' | 'watchdog' | 'bot_script' | 'gdrive') => void;
   onQuickHeal?: () => void;
   isHealing?: boolean;
 }
@@ -81,18 +81,6 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <Cloud className="w-3.5 h-3.5" />
             Google Drive
-          </button>
-
-          <button
-            onClick={() => setActiveTab('github')}
-            className={`px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5 ${
-              activeTab === 'github'
-                ? 'bg-indigo-500 text-white font-semibold shadow-sm'
-                : 'text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            <Github className="w-3.5 h-3.5 text-indigo-400 group-hover:text-white" />
-            Sync with GitHub
           </button>
 
           <button

@@ -110,7 +110,7 @@ export const GoogleDriveCodeEditorModal: React.FC<GoogleDriveCodeEditorModalProp
               <button
                 onClick={() => onViewRaw(file, content)}
                 className="px-2.5 py-1.5 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors text-xs font-medium flex items-center gap-1 cursor-pointer"
-                title="View GitHub-style Raw Stream"
+                title="View Direct Raw Stream"
               >
                 <Eye className="w-3.5 h-3.5 text-blue-600" />
                 <span>Raw View</span>

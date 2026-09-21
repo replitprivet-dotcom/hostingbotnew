@@ -81,7 +81,7 @@ export const RawFilePreviewModal: React.FC<RawFilePreviewModalProps> = ({
                 </span>
               </div>
               <p className="text-[11px] text-slate-500">
-                GitHub Raw style plain output • {lines.length} lines • {(content.length / 1024).toFixed(1)} KB
+                Direct raw plain output • {lines.length} lines • {(content.length / 1024).toFixed(1)} KB
               </p>
             </div>
           </div>

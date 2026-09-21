@@ -26,10 +26,8 @@ import {
   getActiveGoogleClientId, 
   setCustomGoogleClientId, 
   DEFAULT_GOOGLE_CLIENT_ID,
-  isAuthorizedDirectOrigin,
-  getSavedAccounts
+  isAuthorizedDirectOrigin
 } from '../utils/googleDrive';
-import { DriveUser } from '../types';
 
 interface DriveLoginViewProps {
   onLogin: () => Promise<void>;
@@ -56,7 +54,6 @@ export const DriveLoginView: React.FC<DriveLoginViewProps> = ({
   const [clientIdInput, setClientIdInput] = useState(getActiveGoogleClientId());
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [copiedOrigin, setCopiedOrigin] = useState(false);
-  const [savedAccounts] = useState<DriveUser[]>(() => getSavedAccounts());
 
   const isExternalDomain = !isAuthorizedDirectOrigin();
   const currentOrigin = typeof window !== 'undefined' ? window.location.origin : '';
@@ -228,45 +225,6 @@ export const DriveLoginView: React.FC<DriveLoginViewProps> = ({
                 Aap jaise hi Google ke saath sign in karenge, <strong>Google Drive automatically authorize aur enable ho jayega</strong> — koi extra step ya token copy karne ki zaroorat nahi hai.
               </p>
             </div>
-
-            {/* Previous Saved Account 1-Click Reconnect */}
-            {savedAccounts.length > 0 && (
-              <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200/90 space-y-2">
-                <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
-                  Quick Reconnect
-                </div>
-                {savedAccounts.slice(0, 1).map((acc) => (
-                  <div key={acc.email} className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-2 min-w-0">
-                      {acc.picture ? (
-                        <img
-                          src={acc.picture}
-                          alt={acc.name}
-                          className="w-8 h-8 rounded-full border border-slate-200 shrink-0"
-                          referrerPolicy="no-referrer"
-                        />
-                      ) : (
-                        <div className="w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-xs shrink-0">
-                          {acc.name ? acc.name[0].toUpperCase() : 'G'}
-                        </div>
-                      )}
-                      <div className="min-w-0">
-                        <div className="text-xs font-bold text-slate-900 truncate">{acc.name || 'Google User'}</div>
-                        <div className="text-[11px] text-slate-500 truncate">{acc.email}</div>
-                      </div>
-                    </div>
-
-                    <button
-                      onClick={onLogin}
-                      disabled={isLoading}
-                      className="px-3 py-1.5 bg-[#0b57d0] hover:bg-blue-700 text-white rounded-xl text-xs font-semibold shrink-0 cursor-pointer transition-colors"
-                    >
-                      {isLoading ? 'Connecting...' : 'Auto Connect'}
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
 
             {/* Google OAuth Login Button */}
             <button

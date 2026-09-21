@@ -4,7 +4,6 @@ import { DriveLoginView } from './components/DriveLoginView';
 import { ApiKeyManager } from './components/ApiKeyManager';
 import { PrivacyLockOverlay } from './components/PrivacyLockOverlay';
 import { MongoStudio } from './components/MongoStudio';
-import { GitHubSync } from './components/GitHubSync';
 import { 
   DriveUser, 
   DriveFileItem, 
@@ -48,8 +47,8 @@ export default function App() {
   const [isPrivacyMode, setIsPrivacyMode] = useState<boolean>(() => getPrivacyModePref());
   const [isLocked, setIsLocked] = useState<boolean>(() => !!getSecurityPin());
 
-  // Active View: 'drive' | 'apikeys' | 'mongodb' | 'github'
-  const [currentView, setCurrentView] = useState<'drive' | 'apikeys' | 'mongodb' | 'github'>('drive');
+  // Active View: 'drive' | 'apikeys' | 'mongodb'
+  const [currentView, setCurrentView] = useState<'drive' | 'apikeys' | 'mongodb'>('drive');
 
   // Bottom Navigation tab: 'home' | 'starred' | 'shared' | 'files'
   const [activeNavTab, setActiveNavTab] = useState<'home' | 'starred' | 'shared' | 'files'>('files');
@@ -430,12 +429,6 @@ export default function App() {
                 >
                   MongoDB Studio
                 </button>
-                <button
-                  onClick={() => setCurrentView('github')}
-                  className="px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-300 text-slate-800 hover:bg-slate-200 transition-colors text-xs font-semibold cursor-pointer"
-                >
-                  GitHub Sync
-                </button>
               </div>
             </div>
             <ApiKeyManager
@@ -451,46 +444,7 @@ export default function App() {
           user={user}
           activeApiKey={apiKeys[0]?.key || ''}
           onBackToDrive={() => setCurrentView('drive')}
-          onOpenGitHubSync={() => setCurrentView('github')}
         />
-      ) : currentView === 'github' ? (
-        <div className="min-h-screen bg-slate-950 text-slate-100 p-4 sm:p-6">
-          <div className="max-w-6xl mx-auto space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-              <button
-                onClick={() => setCurrentView('drive')}
-                className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors text-xs font-semibold cursor-pointer"
-              >
-                <ArrowLeft className="w-4 h-4" /> Back to Files
-              </button>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => setCurrentView('mongodb')}
-                  className="px-3 py-1.5 rounded-xl bg-emerald-950/80 border border-emerald-800 text-emerald-400 hover:bg-emerald-900 transition-colors text-xs font-semibold cursor-pointer"
-                >
-                  MongoDB Studio
-                </button>
-                <button
-                  onClick={() => setCurrentView('apikeys')}
-                  className="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-colors text-xs font-semibold cursor-pointer"
-                >
-                  API Keys
-                </button>
-              </div>
-            </div>
-            <GitHubSync
-              files={driveFiles.map((f): UserFile => ({
-                id: f.id,
-                name: f.name,
-                language: f.name.endsWith('.js') || f.name.endsWith('.ts') ? 'javascript' : 'python',
-                content: f.id === selectedFile?.id ? fileContent : '',
-                size: f.size || '1 KB',
-                lastModified: f.modifiedTime || 'Recently',
-              }))}
-              mainPyContent={fileContent}
-            />
-          </div>
-        </div>
       ) : (
         <GoogleDriveView
           user={user}
@@ -521,7 +475,6 @@ export default function App() {
           onUploadLocalFile={handleUploadLocalFile}
           onOpenApiKeys={() => setCurrentView('apikeys')}
           onOpenMongoStudio={() => setCurrentView('mongodb')}
-          onOpenGitHubSync={() => setCurrentView('github')}
           onLogout={handleLogout}
           onSwitchAccount={handleSwitchAccount}
           activeNavTab={activeNavTab}

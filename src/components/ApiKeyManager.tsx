@@ -146,7 +146,7 @@ export const ApiKeyManager: React.FC<ApiKeyManagerProps> = ({
       path: '/api/v1/raw/:fileId',
       badge: 'Bot Favorite',
       badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-      title: 'GitHub Raw Style File Stream',
+      title: 'Direct Raw File Stream',
       description: 'Returns plain text or raw binary stream directly (ideal for Telegram bots, python scripts, curl to read files without JSON formatting).',
       curl: `curl -H "x-api-key: ${activeKeyStr}" \\\n  "${originUrl}/api/v1/raw/<FILE_ID>"`,
       queryParamExample: `${originUrl}/api/v1/raw/<FILE_ID>?api_key=${activeKeyStr}`,
@@ -739,7 +739,7 @@ headers = {
     "Content-Type": "application/json"
 }
 
-# 1. Fetch file raw content (GitHub Raw style)
+# 1. Fetch file raw content
 def get_raw_file(file_id):
     url = f"{BASE_URL}/api/v1/raw/{file_id}"
     resp = requests.get(url, headers=headers)
@@ -781,7 +781,7 @@ headers = {
     "Content-Type": "application/json"
 }
 
-# 1. Fetch raw script or document (Like GitHub Raw)
+# 1. Fetch raw script or document
 def get_raw_file(file_id):
     url = f"{BASE_URL}/api/v1/raw/{file_id}"
     resp = requests.get(url, headers=headers)

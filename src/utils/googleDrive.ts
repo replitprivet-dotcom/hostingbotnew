@@ -1,13 +1,15 @@
 // Google Drive API & OAuth Integration via Google Identity Services (GIS)
 import { DriveFileItem, DriveUser } from '../types';
+import firebaseAppletConfig from '../../firebase-applet-config.json';
 
 export const DEFAULT_GOOGLE_CLIENT_ID =
+  firebaseAppletConfig.oAuthClientId ||
   import.meta.env.VITE_GOOGLE_CLIENT_ID ||
-  '148790012602-i9ihrib4m7pb7qj6qtqnaria3goq4sob.apps.googleusercontent.com';
+  '349812161908-4ue1gfria6d01biv4tg17cj7ncnufui0.apps.googleusercontent.com';
 
 export const CLOUD_OAUTH_BRIDGE_URL =
   import.meta.env.VITE_OAUTH_BRIDGE_URL ||
-  'https://ais-pre-arbtb676wov6gts6u65wpz-271709046862.asia-southeast1.run.app/oauth-bridge.html';
+  (typeof window !== 'undefined' ? `${window.location.origin}/oauth-bridge.html` : '/oauth-bridge.html');
 
 export function isAuthorizedDirectOrigin(): boolean {
   if (typeof window === 'undefined') return true;
@@ -15,6 +17,7 @@ export function isAuthorizedDirectOrigin(): boolean {
   const hostname = window.location.hostname;
   return (
     origin.includes('run.app') ||
+    origin.includes('ai.studio') ||
     hostname === 'localhost' ||
     hostname === '127.0.0.1' ||
     Boolean(localStorage.getItem('kaalix_custom_client_id'))
@@ -24,6 +27,11 @@ export function isAuthorizedDirectOrigin(): boolean {
 export function getActiveGoogleClientId(): string {
   try {
     const custom = localStorage.getItem('kaalix_custom_client_id');
+    // If user has old non-working client ID cached, purge it
+    if (custom && custom.includes('148790012602')) {
+      localStorage.removeItem('kaalix_custom_client_id');
+      return DEFAULT_GOOGLE_CLIENT_ID;
+    }
     if (custom && custom.trim()) return custom.trim();
   } catch (e) {
     // ignore
